@@ -16,6 +16,14 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity
+            android:name=".IndividualArtistActivity"
+            android:label="@string/title_activity_individual_artist"
+            android:parentActivityName=".MainActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.unachicayelmundo.samirmarin.spotifystreamer.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

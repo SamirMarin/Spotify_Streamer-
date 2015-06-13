@@ -1,5 +1,7 @@
 package com.unachicayelmundo.samirmarin.spotifystreamer;
 
+import android.content.Context;
+import android.content.Intent;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
@@ -7,10 +9,14 @@ import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -58,6 +64,16 @@ public class MainActivityFragment extends Fragment {
 
         list_artist_view.setAdapter(adapter);
 
+        // shows the artist details when clicked by the user
+        list_artist_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Intent individualArtistIntent = new Intent(getActivity(), IndividualArtistActivity.class);
+                individualArtistIntent.putExtra(individualArtistIntent.EXTRA_TEXT, adapter.getItem(position));
+                startActivity(individualArtistIntent);
+            }
+        });
+
         return rootView;
     }
 
@@ -74,8 +90,17 @@ public class MainActivityFragment extends Fragment {
 
             }
 
+            // shows toast if not artist are found when searching.
             @Override
             public void afterTextChanged(Editable s) {
+                if(adapter.isEmpty()){
+                    Context context = getActivity();
+                    String text = "no artist found";
+                    int duration = Toast.LENGTH_SHORT;
+                    Toast toast = Toast.makeText(context, text, duration);
+                    toast.show();
+
+                }
 
             }
         };
