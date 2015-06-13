@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.TextView;
 
 
@@ -25,11 +26,21 @@ public class IndividualArtistActivityFragment extends Fragment {
 
         Intent intent = getActivity().getIntent();
 
+        //for the click on the artist to get a list of songs
+        TextView textView = null;
+
         if(intent != null && intent.hasExtra(intent.EXTRA_TEXT)){
             String artistDetail = intent.getStringExtra(intent.EXTRA_TEXT);
-            ((TextView) rootView.findViewById(R.id.artist_detail)).setText(artistDetail);
+            textView = ((TextView) rootView.findViewById(R.id.artist_detail));
+            textView.setText(artistDetail);
+
 
         }
+
+
+
+
+
 
         return rootView;
     }

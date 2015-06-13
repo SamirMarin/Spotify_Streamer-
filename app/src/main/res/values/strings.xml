@@ -4,5 +4,6 @@
     <string name="action_settings">Settings</string>
 
     <string name="artist_search">Search Artist...</string>
-    <string name="title_activity_individual_artist">IndividualArtistActivity</string>
+    <string name="title_activity_individual_artist">Artist Details</string>
+    <string name="title_activity_top_songs">Top 10 Songs</string>
 </resources>

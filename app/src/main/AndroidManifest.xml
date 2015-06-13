@@ -24,6 +24,14 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.unachicayelmundo.samirmarin.spotifystreamer.MainActivity" />
         </activity>
+        <activity
+            android:name=".TopSongsActivity"
+            android:label="@string/title_activity_top_songs"
+            android:parentActivityName=".IndividualArtistActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.unachicayelmundo.samirmarin.spotifystreamer.IndividualArtistActivity" />
+        </activity>
     </application>
 
 </manifest>

@@ -37,10 +37,10 @@ public class MainActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         List<String> fakeArtist = new ArrayList<String>();
-        String artistA = "Blink-182-All the Small things ";
-        String artistB = "Passenger-All the Little Things ";
-        String artistC = "Franco De vita-Claro que se Perder ";
-        String artistD = "Adrian Marin-Esperanza Del Alma ";
+        String artistA = "Blink-182 ";
+        String artistB = "Passenger ";
+        String artistC = "Franco De vita ";
+        String artistD = "Adrian Marin ";
         for(int i =0; i < 5; i++){
             fakeArtist.add(artistA + i);
             fakeArtist.add(artistB + i);
