@@ -2,6 +2,14 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.unachicayelmundo.samirmarin.spotifystreamer.IndividualArtistActivity">
-    <item android:id="@+id/action_settings" android:title="@string/action_settings"
-        android:orderInCategory="100" app:showAsAction="never" />
+    <item android:id="@+id/action_settings"
+        android:title="@string/action_settings"
+        android:orderInCategory="100"
+        app:showAsAction="never" />
+    <!--- menu for top 10 ten songs for that album.. -->
+
+    <item android:id="@+id/action_topTenSongs"
+        android:title="@string/title_activity_top_songs"
+        android:orderInCategory="100"
+        app:showAsAction="always"/>
 </menu>

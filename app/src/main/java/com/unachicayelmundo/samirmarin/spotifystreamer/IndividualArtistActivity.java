@@ -35,7 +35,7 @@ public class IndividualArtistActivity extends ActionBarActivity {
             return true;
         }
 
-        if (id == R.id.artist_detail) {
+        if (id == R.id.action_topTenSongs) {
             Intent topSongsIntent = new Intent(this, TopSongsActivity.class);
             startActivity(topSongsIntent);
             return true;

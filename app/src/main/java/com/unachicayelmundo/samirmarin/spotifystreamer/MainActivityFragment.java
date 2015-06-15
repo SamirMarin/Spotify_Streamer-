@@ -2,6 +2,7 @@ package com.unachicayelmundo.samirmarin.spotifystreamer;
 
 import android.content.Context;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
@@ -20,6 +21,10 @@ import org.w3c.dom.Text;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import kaaes.spotify.webapi.android.SpotifyApi;
+import kaaes.spotify.webapi.android.SpotifyService;
+import kaaes.spotify.webapi.android.models.ArtistsPager;
 
 
 /**
@@ -109,5 +114,24 @@ public class MainActivityFragment extends Fragment {
         return textWatcher;
 
 
+    }
+    public class fetchArtistTask extends AsyncTask<Void, Void, String[]>{
+
+        @Override
+        protected String[] doInBackground(String... params) {
+
+            SpotifyApi api = new SpotifyApi();
+            SpotifyService spotifyService = api.getService();
+            ArtistsPager artistsResult = spotifyService.searchArtists(params[0]);
+
+            //temp holder
+            return new String[0];
+        }
+
+
+        @Override
+        protected String[] doInBackground(Void... params) {
+            return new String[0];
+        }
     }
 }
