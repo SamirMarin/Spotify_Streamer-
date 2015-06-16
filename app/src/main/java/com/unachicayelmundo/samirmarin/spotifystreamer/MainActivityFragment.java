@@ -90,12 +90,19 @@ public class MainActivityFragment extends Fragment {
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                //adapter.getFilter().filter(s);
+                if(s != null){
+                    //adapter.getFilter().filter(s);
+                    //updateArtistList(s.toString());
+                }
+
                 //updateArtistList(s.toString());
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                if(s != null){
+
+                }
                 //updateArtistList(s.toString());
 
             }
@@ -103,7 +110,7 @@ public class MainActivityFragment extends Fragment {
             // shows toast if not artist are found when searching.
             @Override
             public void afterTextChanged(Editable s) {
-                updateArtistList(s.toString());
+                //updateArtistList(s.toString());
 
                 if(adapter.isEmpty()){
                     Context context = getActivity();
