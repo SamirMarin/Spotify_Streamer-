@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,11 +20,13 @@ import android.widget.Toast;
 
 import org.w3c.dom.Text;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
 import kaaes.spotify.webapi.android.SpotifyApi;
 import kaaes.spotify.webapi.android.SpotifyService;
+import kaaes.spotify.webapi.android.models.Artist;
 import kaaes.spotify.webapi.android.models.ArtistsPager;
 
 
@@ -87,17 +90,21 @@ public class MainActivityFragment extends Fragment {
         TextWatcher textWatcher = new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
-                adapter.getFilter().filter(s);
+                //adapter.getFilter().filter(s);
+                //updateArtistList(s.toString());
             }
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
+                //updateArtistList(s.toString());
 
             }
 
             // shows toast if not artist are found when searching.
             @Override
             public void afterTextChanged(Editable s) {
+                updateArtistList(s.toString());
+
                 if(adapter.isEmpty()){
                     Context context = getActivity();
                     String text = "no artist found";
@@ -115,23 +122,61 @@ public class MainActivityFragment extends Fragment {
 
 
     }
-    public class fetchArtistTask extends AsyncTask<Void, Void, String[]>{
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        updateArtistList("Beyonce");
+    }
+
+    private void updateArtistList(String str){
+        FetchArtistTask fetch = new FetchArtistTask();
+        fetch.execute(str);
+    }
+
+    public class FetchArtistTask extends AsyncTask<String, Void, String[]>{
+        private String LOGTAG = FetchArtistTask.class.getSimpleName();
+        SpotifyService spotifyService;
+
+        @Override
+        protected void onPreExecute() {
+            SpotifyApi spotifyApi = new SpotifyApi();
+            spotifyService = spotifyApi.getService();
+
+        }
 
         @Override
         protected String[] doInBackground(String... params) {
 
-            SpotifyApi api = new SpotifyApi();
-            SpotifyService spotifyService = api.getService();
+            if(params.length == 0){
+                return null;
+            }
+
+
             ArtistsPager artistsResult = spotifyService.searchArtists(params[0]);
 
+
+
+            String[] artistInfo = new String[100];
+            int i = 0;
+
+            for(Artist artist: artistsResult.artists.items){
+                String tempString = artist.name + " " + artist.id;
+                artistInfo[i] = tempString;
+                i++;
+
+            }
+
             //temp holder
-            return new String[0];
+            return artistInfo;
         }
 
-
         @Override
-        protected String[] doInBackground(Void... params) {
-            return new String[0];
+        protected void onPostExecute(String[] strings) {
+            adapter.clear();
+            for(int i =0; i < strings.length; i++){
+                adapter.add(strings[i]);
+            }
         }
     }
 }
