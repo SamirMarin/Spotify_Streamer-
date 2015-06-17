@@ -59,7 +59,7 @@ public class MainActivityFragment extends Fragment {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        if(id == R.id.artist_search){
+        if(id == R.id.action_search){
            String artist = artistSearch.getText().toString();
             updateArtistList(artist);
             return true;
