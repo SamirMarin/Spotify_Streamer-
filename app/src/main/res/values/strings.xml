@@ -6,4 +6,6 @@
     <string name="artist_search">Search Artist...</string>
     <string name="title_activity_individual_artist">Artist Details</string>
     <string name="title_activity_top_songs">Top 10 Songs</string>
+
+    <string name="action_search"> Search </string>
 </resources>

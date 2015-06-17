@@ -9,6 +9,9 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -35,9 +38,34 @@ import kaaes.spotify.webapi.android.models.ArtistsPager;
  */
 public class MainActivityFragment extends Fragment {
     private ArrayAdapter<String> adapter;
+    private EditText artistSearch;
 
 
     public MainActivityFragment() {
+    }
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        //allows for menu options
+        setHasOptionsMenu(true);
+    }
+
+    @Override
+    public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
+        inflater.inflate(R.menu.menu_main_activityfragment, menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        if(id == R.id.artist_search){
+           String artist = artistSearch.getText().toString();
+            updateArtistList(artist);
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
     @Override
@@ -64,7 +92,10 @@ public class MainActivityFragment extends Fragment {
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
-        EditText artistSearch = (EditText) rootView.findViewById(R.id.artist_search);
+        artistSearch = (EditText) rootView.findViewById(R.id.artist_search);
+
+        //search
+        //updateArtistList(artistSearch.getText().toString());
 
         artistSearch.addTextChangedListener(makeTextWatcher());
 
@@ -161,6 +192,9 @@ public class MainActivityFragment extends Fragment {
 
 
             ArtistsPager artistsResult = spotifyService.searchArtists(params[0]);
+            if(artistsResult == null){
+                return null;
+            }
 
 
 
@@ -180,10 +214,13 @@ public class MainActivityFragment extends Fragment {
 
         @Override
         protected void onPostExecute(String[] strings) {
-            adapter.clear();
-            for(int i =0; i < strings.length; i++){
-                adapter.add(strings[i]);
+            if(strings != null){
+                adapter.clear();
+                for(int i =0; i < strings.length; i++){
+                    adapter.add(strings[i]);
+                }
             }
+
         }
     }
 }
