@@ -17,20 +17,25 @@ import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.squareup.picasso.Picasso;
 
 import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 
 import kaaes.spotify.webapi.android.SpotifyApi;
 import kaaes.spotify.webapi.android.SpotifyService;
 import kaaes.spotify.webapi.android.models.Artist;
 import kaaes.spotify.webapi.android.models.ArtistsPager;
+import kaaes.spotify.webapi.android.models.Image;
 
 
 /**
@@ -39,6 +44,7 @@ import kaaes.spotify.webapi.android.models.ArtistsPager;
 public class MainActivityFragment extends Fragment {
     private ArrayAdapter<String> adapter;
     private EditText artistSearch;
+    private HashMap<String, List<Image>> hashTableArtist;
 
 
     public MainActivityFragment() {
@@ -85,8 +91,8 @@ public class MainActivityFragment extends Fragment {
         }
         adapter = new ArrayAdapter<String>(
                 getActivity(),
-                R.layout.list_item_artist,
-                R.id.list_item_artist_textview,
+                R.layout.artist_item_view,
+                R.id.list_item_artist_textview_new,
                 fakeArtist
         );
 
@@ -100,8 +106,15 @@ public class MainActivityFragment extends Fragment {
         artistSearch.addTextChangedListener(makeTextWatcher());
 
         ListView list_artist_view = (ListView) rootView.findViewById(R.id.listview_artist);
+        //ImageView imageView = (ImageView) rootView.findViewById(R.id.list_item_artist_textview);
 
         list_artist_view.setAdapter(adapter);
+
+        //View imageView = inflater.inflate(R.layout.artist_item_view, rootView, true);
+
+        for(int i = 0; i < adapter.getCount(); i++) {
+           // Picasso.with(getActivity()).load(hashTableArtist.get(adapter.getItem(i)).get(i).url).into(R.id.artist_imageView.);
+        }
 
         // shows the artist details when clicked by the user
         list_artist_view.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -198,18 +211,23 @@ public class MainActivityFragment extends Fragment {
 
 
 
-            String[] artistInfo = new String[100];
+            String[] artistname = new String[100];
+            String[] artistID = new String[100];
+            hashTableArtist = new HashMap<>();
+
             int i = 0;
 
             for(Artist artist: artistsResult.artists.items){
-                String tempString = artist.name + " " + artist.id;
-                artistInfo[i] = tempString;
+                String tempString = artist.name;
+                artistname[i] = tempString;
+                artistID[i] = artist.id;
+                hashTableArtist.put(tempString, artist.images);
                 i++;
 
             }
 
             //temp holder
-            return artistInfo;
+            return artistname;
         }
 
         @Override
