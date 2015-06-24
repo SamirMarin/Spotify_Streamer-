@@ -79,6 +79,7 @@ public class MainActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         List<String> fakeArtist = new ArrayList<String>();
+        String[] artist = new String[] {"blink", "passenger", "Franco", "Adrian"};
         String artistA = "Blink-182 ";
         String artistB = "Passenger ";
         String artistC = "Franco De vita ";
@@ -88,13 +89,16 @@ public class MainActivityFragment extends Fragment {
             fakeArtist.add(artistB + i);
             fakeArtist.add(artistC + i);
             fakeArtist.add(artistD + i);
+
         }
-        adapter = new ArrayAdapter<String>(
+
+        adapter = new ListItemArrayAdapter(getActivity(), artist, hashTableArtist);
+        /*adapter = new ArrayAdapter<String>(
                 getActivity(),
                 R.layout.artist_item_view,
                 R.id.list_item_artist_textview_new,
                 fakeArtist
-        );
+        );*/
 
         View rootView = inflater.inflate(R.layout.fragment_main, container, false);
 
@@ -156,14 +160,14 @@ public class MainActivityFragment extends Fragment {
             public void afterTextChanged(Editable s) {
                 //updateArtistList(s.toString());
 
-                if(adapter.isEmpty()){
+                /*if(adapter.isEmpty()){
                     Context context = getActivity();
                     String text = "no artist found";
                     int duration = Toast.LENGTH_SHORT;
                     Toast toast = Toast.makeText(context, text, duration);
                     toast.show();
 
-                }
+                }*/
 
             }
         };
