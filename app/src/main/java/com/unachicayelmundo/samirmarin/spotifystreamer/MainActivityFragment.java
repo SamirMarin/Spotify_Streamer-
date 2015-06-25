@@ -42,7 +42,7 @@ import kaaes.spotify.webapi.android.models.Image;
  * A placeholder fragment containing a simple view.
  */
 public class MainActivityFragment extends Fragment {
-    private ArrayAdapter<String> adapter;
+    private ListItemArrayAdapter adapter;
     private EditText artistSearch;
     private HashMap<String, List<Image>> hashTableArtist;
 
@@ -79,7 +79,8 @@ public class MainActivityFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         List<String> fakeArtist = new ArrayList<String>();
-        String[] artist = new String[] {"blink", "passenger", "Franco", "Adrian"};
+        String[] artist = new String[110];
+        artist[1] = "yes";
         String artistA = "Blink-182 ";
         String artistB = "Passenger ";
         String artistC = "Franco De vita ";
@@ -125,7 +126,7 @@ public class MainActivityFragment extends Fragment {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent individualArtistIntent = new Intent(getActivity(), IndividualArtistActivity.class);
-                individualArtistIntent.putExtra(individualArtistIntent.EXTRA_TEXT, adapter.getItem(position));
+                //individualArtistIntent.putExtra(individualArtistIntent.EXTRA_TEXT, adapter.getItem(position));
                 startActivity(individualArtistIntent);
             }
         });
@@ -237,9 +238,10 @@ public class MainActivityFragment extends Fragment {
         @Override
         protected void onPostExecute(String[] strings) {
             if(strings != null){
-                adapter.clear();
+                //adapter.clear();
                 for(int i =0; i < strings.length; i++){
-                    adapter.add(strings[i]);
+                   // adapter.add(strings[i]);
+                    adapter.getValues()[i] = strings[i];
                 }
             }
 

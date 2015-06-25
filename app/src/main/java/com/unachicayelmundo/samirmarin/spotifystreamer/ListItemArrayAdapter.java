@@ -38,15 +38,19 @@ public class ListItemArrayAdapter extends ArrayAdapter {
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
+
         LayoutInflater inflater = (LayoutInflater)  context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.artist_item_view, parent, false);
-        TextView textView = (TextView) rowView.findViewById(R.id.list_item_artist_textview_new);
-        ImageView imageView = (ImageView) rowView.findViewById(R.id.artist_imageView);
-        textView.setText(values[position]);
-        URL url;
-        URI uri;
 
-        //Picasso.with(context).load(hashTable.get(values[position]).get(0).url).into(imageView);
+        if(values[1] != "yes"){
+            TextView textView = (TextView) rowView.findViewById(R.id.list_item_artist_textview_new);
+            ImageView imageView = (ImageView) rowView.findViewById(R.id.artist_imageView);
+            textView.setText(values[position]);
+
+            Picasso.with(context).load(hashTable.get(values[position]).get(0).url).into(imageView);
+        }
+
 
         /*try {
             url = new URL(hashTable.get(values[position]).get(0)..url);
@@ -62,5 +66,8 @@ public class ListItemArrayAdapter extends ArrayAdapter {
 
 
 
+    }
+    public String[] getValues(){
+        return this.values;
     }
 }
