@@ -78,22 +78,26 @@ public class MainActivityFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
 
-        List<String> fakeArtist = new ArrayList<String>();
+        List<Artist> fakeArtist = new ArrayList<Artist>();
+        Artist holder = null;
+        fakeArtist.add(holder);
         String[] artist = new String[110];
-        artist[1] = "yes";
+        //fakeArtist.add(new Artist());
         String artistA = "Blink-182 ";
         String artistB = "Passenger ";
         String artistC = "Franco De vita ";
         String artistD = "Adrian Marin ";
         for(int i =0; i < 5; i++){
-            fakeArtist.add(artistA + i);
-            fakeArtist.add(artistB + i);
-            fakeArtist.add(artistC + i);
-            fakeArtist.add(artistD + i);
+            //fakeArtist.add(artistA + i);
+            //fakeArtist.add(artistB + i);
+            //fakeArtist.add(artistC + i);
+            //fakeArtist.add(artistD + i);
 
         }
 
-        adapter = new ListItemArrayAdapter(getActivity(), artist, hashTableArtist);
+        fakeArtist.clear();
+
+        adapter = new ListItemArrayAdapter(getActivity(), fakeArtist);
         /*adapter = new ArrayAdapter<String>(
                 getActivity(),
                 R.layout.artist_item_view,
@@ -190,7 +194,7 @@ public class MainActivityFragment extends Fragment {
         fetch.execute(str);
     }
 
-    public class FetchArtistTask extends AsyncTask<String, Void, String[]>{
+    public class FetchArtistTask extends AsyncTask<String, Void, Artist[]>{
         private String LOGTAG = FetchArtistTask.class.getSimpleName();
         SpotifyService spotifyService;
 
@@ -202,7 +206,7 @@ public class MainActivityFragment extends Fragment {
         }
 
         @Override
-        protected String[] doInBackground(String... params) {
+        protected Artist[] doInBackground(String... params) {
 
             if(params.length == 0){
                 return null;
@@ -219,29 +223,34 @@ public class MainActivityFragment extends Fragment {
             String[] artistname = new String[100];
             String[] artistID = new String[100];
             hashTableArtist = new HashMap<>();
+            Artist[] artists = new Artist[artistsResult.artists.items.size()];
 
             int i = 0;
 
             for(Artist artist: artistsResult.artists.items){
-                String tempString = artist.name;
-                artistname[i] = tempString;
-                artistID[i] = artist.id;
-                hashTableArtist.put(tempString, artist.images);
+                //String tempString = artist.name;
+                //artistname[i] = tempString;
+                //artistID[i] = artist.id;
+                //hashTableArtist.put(tempString, artist.images);
+
+                artists[i] = artist;
                 i++;
+
+
 
             }
 
             //temp holder
-            return artistname;
+            return artists;
         }
 
         @Override
-        protected void onPostExecute(String[] strings) {
-            if(strings != null){
-                //adapter.clear();
-                for(int i =0; i < strings.length; i++){
-                   // adapter.add(strings[i]);
-                    adapter.getValues()[i] = strings[i];
+        protected void onPostExecute(Artist[] artists) {
+            if(artists != null){
+                adapter.clear();
+                for(int i =0; i < artists.length; i++){
+                    adapter.addToValues(artists[i]);
+                   // adapter.getValues()[i] = strings[i];
                 }
             }
 

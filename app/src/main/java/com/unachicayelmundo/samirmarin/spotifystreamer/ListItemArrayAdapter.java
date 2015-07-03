@@ -15,9 +15,11 @@ import java.net.MalformedURLException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import kaaes.spotify.webapi.android.models.Artist;
 import kaaes.spotify.webapi.android.models.Image;
 
 /**
@@ -25,15 +27,13 @@ import kaaes.spotify.webapi.android.models.Image;
  */
 public class ListItemArrayAdapter extends ArrayAdapter {
     Context context;
-    String[] values;
-    HashMap<String, List<Image>> hashTable;
+    List <Artist> values;
 
 
-    public ListItemArrayAdapter(Context context, String[] values, HashMap<String, List<Image>> hashTable) {
+    public ListItemArrayAdapter(Context context, List values) {
         super(context, R.layout.artist_item_view, values);
         this.context = context;
         this.values = values;
-        this.hashTable = hashTable;
     }
 
     @Override
@@ -43,12 +43,17 @@ public class ListItemArrayAdapter extends ArrayAdapter {
         LayoutInflater inflater = (LayoutInflater)  context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         View rowView = inflater.inflate(R.layout.artist_item_view, parent, false);
 
-        if(values[1] != "yes"){
+        if(values != null){
             TextView textView = (TextView) rowView.findViewById(R.id.list_item_artist_textview_new);
             ImageView imageView = (ImageView) rowView.findViewById(R.id.artist_imageView);
-            textView.setText(values[position]);
+            textView.setText(values.get(position).name);
+            int sizeImageList = values.get(position).images.size();
+            if(sizeImageList > 0){
+                Picasso.with(context).load(values.get(position).images.get(0).url).into(imageView);
 
-            Picasso.with(context).load(hashTable.get(values[position]).get(0).url).into(imageView);
+           }
+
+
         }
 
 
@@ -67,7 +72,16 @@ public class ListItemArrayAdapter extends ArrayAdapter {
 
 
     }
-    public String[] getValues(){
-        return this.values;
+    //public List<String> getValues(){
+     //   return this.values;
+    //}
+
+    public void addToValues(Artist artist){
+        values.add(artist);
+
+    }
+    public void setHash(HashMap<String, List<Image>> hashTable){
+
+
     }
 }
